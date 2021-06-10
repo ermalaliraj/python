@@ -8,29 +8,37 @@
 
 class Concordancier:
     def __init__(self, file_name):
-        file = open(file_name) # save the text as a list of lines
+        file = open(file_name)  # save the text as a list of lines
         self.text = file.readlines()
 
-    def display(self, word, context_length=20):
+    def display(self, word, context_length=25):
+        word = word.lower()
+        count = 0;
         for line in self.text:
-            line = " " + line.strip().lower() + " " # add spaces: tip to search for whole words
-            match = line.find(" " + word.lower() + " ")
-            while match >= 0: # if find
-                # determine the beginning and the end of word
-                beginning = match + 1
-                end = match + len(word) + 2
+            line = line.strip().lower()
+            match = line.find(word)
+            while match >= 0:  # handle the first found, then loop in case there is more than one occurrence in the line
+                count += 1;
+                endMatch = match + len(word)
 
-                # determine the beginning and the end of context
-                beginning_context = max(0, match-context_length)
-                end_context = min(end+context_length, len(line)) # extract the contexts of the line
-                context_left = line[beginning_context:match]
-                context_right = line[end:end_context]
+                # determine the beginning and the endMatch of context
+                beginning_context = match - context_length
+                end_context = endMatch + context_length
+
+                context_left = "..." if (beginning_context > 0) else " "
+                context_left = context_left + line[beginning_context:match]
+
+                context_right = "..." if (end_context < len(line)) else " "
+                context_right = line[endMatch:end_context] + context_right
 
                 # format the contexts
-                s = "{0:>{width}} {1} {2:<{width}}".format(context_left, word.upper(), context_right, width=context_length)
+                s = "{0:>{width}} {1} {2:<{width}}".format(context_left, word.upper(), context_right,
+                                                           width=context_length + 5)
                 print(s)
+                match = line.find(word, endMatch)  # look for the next occurrence
 
-                match = line.find(" " + word.lower() + " ", end) # look for the next occurrence
+        print("\nWord ", word, "found", count, "times")
+
 
 c = Concordancier("austen.txt")
 c.display("emma")
