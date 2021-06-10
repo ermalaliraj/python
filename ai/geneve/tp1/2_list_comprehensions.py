@@ -15,8 +15,18 @@ totalCharacters = len(text1)
 
 percentCharacters = totalNonEmptyCharacters / totalCharacters
 totalEmptySpaces = totalCharacters - totalNonEmptyCharacters
-print("totalCharacters: " + totalCharacters, "totalNonEmptyCharacters: " + totalNonEmptyCharacters)
-print("percentCharacters: " + percentCharacters, "totalEmptySpaces: " + totalEmptySpaces)
+print("totalCharacters: " + str(totalCharacters), "totalNonEmptyCharacters: " + str(totalNonEmptyCharacters))
+print("percentCharacters: " + str(percentCharacters), "totalEmptySpaces: " + str(totalEmptySpaces))
+
+word_list = text1.split()
+count = 0
+totalLength = 0
+for word in word_list:
+    totalLength = totalLength + len(word)
+    count = count + 1
+
+avgLength = totalLength / count
+print("avgLength: " + str(avgLength))
 
 list = ["she", "sells", "sea", "shells", "by", "the", "sea", "shore"]
 for x in list:

@@ -12,7 +12,7 @@ for m in w:
 # * wh where
 # * ne never
 
-
+print("***Now***")
 for m in w:
     if m[:2] == 'wh':
         print("*", m[:2], m)
