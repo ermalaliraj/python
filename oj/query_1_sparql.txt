@@ -1,0 +1,43 @@
+url: http://publications.europa.eu/webapi/rdf/sparql   (remove this line from the query)
+
+# Query 1 builded as string
+ 
+PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+
+SELECT DISTINCT  ?manifestation
+WHERE
+  { ?work  cdm:resource_legal_eli  ?eli
+    FILTER ( ?eli = "http://data.europa.eu/eli/reg/2013/1303/oj"^^<http://www.w3.org/2001/XMLSchema#anyURI> )
+    ?work ^cdm:expression_belongs_to_work ?expression .
+    ?expression  cdm:expression_uses_language  ?lng
+    FILTER ( ?lng = <http://publications.europa.eu/resource/authority/language/ENG> )
+    ?manifestation
+              cdm:manifestation_manifests_expression  ?expression ;
+              cdm:manifestation_type  ?type
+    FILTER regex(str(?type), "fmx4")
+  }
+  
+# qexec.execSelect(); result
+{
+  "head": {
+    "vars": [
+      "manifestation"
+    ]
+  },
+  "results": {
+    "bindings": [
+      {
+        "manifestation": {
+          "type": "uri",
+          "value": "http://publications.europa.eu/resource/cellar/fcd9e6d2-6c02-11e3-9afb-01aa75ed71a1.0006.02"
+        }
+      }
+    ]
+  }
+}
+
+
+# query 2 rest http://publications.europa.eu/resource/cellar/fcd9e6d2-6c02-11e3-9afb-01aa75ed71a1.0006.02/DOC_2
+
+
+# query 2 rest, xml result in in different file
