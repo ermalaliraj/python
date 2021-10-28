@@ -17,7 +17,7 @@ training_inputs = np.array([[0, 0, 1],
                             [0, 1, 1]])
 
 # output dataset
-training_output = np.array([[0, 1, 1, 0]]).T
+training_outputs = np.array([[0, 1, 1, 0]]).T
 
 # seed random numbers to make calculation
 np.random.seed(1)
@@ -33,7 +33,7 @@ for iteration in range(20000):
     input_layer = training_inputs
 
     # Normalize the product of the input layer with the synaptic weights
-    outputs = sigmoid(np.dot(input_layer, synaptic_weights))
+    output = sigmoid(np.dot(input_layer, synaptic_weights))
     # [[0.2689864 ]
     #  [0.3262757 ]
     #  [0.23762817]
@@ -43,9 +43,9 @@ for iteration in range(20000):
     # if we pass this  -0,999 to the sigmoid normalization gives 0,2689864
 
     # how much did we miss?
-    error = training_output - outputs
+    error = training_outputs - output
     # multiply how much we missed by the slope of the sigmoid at the values in outputs
-    adjustments = error * sigmoid_derivative(outputs)
+    adjustments = error * sigmoid_derivative(output)
     # update weights
     synaptic_weights += np.dot(input_layer.T, adjustments)
 
@@ -53,4 +53,4 @@ print('Synaptic weight after training')
 print(synaptic_weights)
 
 print('Output after training')
-print(outputs)
+print(output)

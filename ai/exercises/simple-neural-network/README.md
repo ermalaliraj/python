@@ -5,6 +5,7 @@ Creating a simple neural network in Python with one input layer (3 inputs) and o
 ## How it works?
 `simple_neural_net.py` tries to predict the output given 3 binary inputs. 
 If the first input is 1, the output should be 1, otherwise the output should be 0.
+`main.py` object to be used to pass input dynamically.
 
 ## Neural Network theory
 A neural network with no hidden layers is called a `perceptron`. 
